@@ -1,0 +1,23 @@
+{{#if successMsg}}
+<div class="container position-fixed bottom-0 end-0 w-25" style="min-width: 16em;">
+  <div class="alert alert-primary alert-dismissible fade show px-3 m-1" role="alert">
+    <p>
+      <i class="fa-solid fa-circle-info"></i> 系統訊息：
+      <strong>{{successMsg}}</strong>
+    </p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
+{{/if}}
+
+{{#if errorMsg}}
+<div class="container position-fixed bottom-0 end-0 w-25" style="min-width: 16em;">
+  <div class="alert alert-danger alert-dismissible fade show px-3 m-1" role="alert">
+    <p>
+      <i class="fa-solid fa-triangle-exclamation"></i> 系統訊息：
+      <strong>{{errorMsg}}</strong>
+    </p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
+{{/if}}
