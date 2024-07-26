@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 const seeds = require('../restaurant.json').results
 
 /** @type {import('sequelize-cli').Migration} */
@@ -10,4 +10,4 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     await (queryInterface.bulkDelete('Restaurants', null))
   }
-};
+}
