@@ -14,23 +14,17 @@ router.get('/', (req, res) => {
       attributes: ['id', 'name', 'category', 'image', 'rating'],
       raw: true
     })
-      .then(restaurants => res.render('index', {
-        restaurants,
-        successMsg: req.flash('success'),
-        errorMsg: req.flash('error')
-      }))
+      .then(restaurants => res.render('index', { restaurants }))
       .catch(error => {
         console.log(error)
         req.flash('error', '資料取得錯誤')
         res.redirect('back')
       })
-  }
-  catch (error) {
+  } catch (error) {
     console.log(error)
     req.flash('error', '系統錯誤')
     res.redirect('back')
   }
-
 })
 
 module.exports = router
