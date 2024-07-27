@@ -8,23 +8,16 @@ const restaurants = require('./restaurants')
 
 router.use('/restaurants', restaurants)
 
-router.get('/', (req, res) => {
-  try {
-    return Restaurant.findAll({
-      attributes: ['id', 'name', 'category', 'image', 'rating'],
-      raw: true
+router.get('/', (req, res, error) => {
+  return Restaurant.findAll({
+    attributes: ['id', 'name', 'category', 'image', 'rating'],
+    raw: true
+  })
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => {
+      error.errorMsg = '資料取得錯誤'
+      next(error)
     })
-      .then(restaurants => res.render('index', { restaurants }))
-      .catch(error => {
-        console.log(error)
-        req.flash('error', '資料取得錯誤')
-        res.redirect('back')
-      })
-  } catch (error) {
-    console.log(error)
-    req.flash('error', '系統錯誤')
-    res.redirect('back')
-  }
 })
 
 module.exports = router
