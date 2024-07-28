@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
+const { Op } = require('sequelize')
+
 const db = require('../models')
 const Restaurant = db.Restaurant
 
@@ -23,6 +25,25 @@ router.post('/', (req, res, next) => {
 })
 
 // read restaurant
+router.get('/search', (req, res, next) => {
+  const keyword = req.query.keyword.trim()
+  const options = { attributes: ['id', 'name', 'category', 'image', 'rating'],
+                    raw: true}
+  if (keyword !== '') {
+    options.where = {
+      [Op.or]: [{ name: { [Op.like]: `%${keyword}%` } },
+                { category: { [Op.like]: `%${keyword}%` } }]
+    }
+  }
+  return Restaurant.findAll(options)
+    .then(restaurants => {
+      res.render('index', { restaurants, keyword })})
+    .catch(error => {
+      error.errorMsg = '資料取得錯誤'
+      next(error)
+    })
+})
+
 router.get('/:id', (req, res, next) => {
   const id = req.params.id
   return Restaurant.findByPk(id, {
