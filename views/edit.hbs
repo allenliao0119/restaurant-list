@@ -19,13 +19,13 @@
     <div class="col-md-12">
       <label for="selectCategory" class="form-label fw-bold">類別</label>
       <select class="form-select" aria-label="select restaurant category" id="selectCategory" name="category" value="{{restaurant.category}}">
-        <option value="" selected disabled hidden>請選擇餐廳類別</option>
-        <option value="義式餐廳">義式餐廳</option>
-        <option value="中東料理">中東料理</option>
-        <option value="日本料理">日本料理</option>
-        <option value="美式">美式</option>
-        <option value="咖啡">咖啡</option>
-        <option value="酒吧">酒吧</option>
+        <option value="" disabled hidden>請選擇餐廳類別</option>
+        <option value="義式餐廳" {{#if (isEqual restaurant.category '義式餐廳') }}selected{{/if}}>義式餐廳</option>
+        <option value="中東料理" {{#if (isEqual restaurant.category '中東料理') }}selected{{/if}}>中東料理</option>
+        <option value="日本料理" {{#if (isEqual restaurant.category '日本料理') }}selected{{/if}}>日本料理</option>
+        <option value="美式" {{#if (isEqual restaurant.category '美式') }}selected{{/if}}>美式</option>
+        <option value="咖啡" {{#if (isEqual restaurant.category '咖啡') }}selected{{/if}}>咖啡</option>
+        <option value="酒吧" {{#if (isEqual restaurant.category '酒吧') }}selected{{/if}}>酒吧</option>
       </select>
     </div>
 
