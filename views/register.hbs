@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="/stylesheets/login.css">
+
+<div class="container login d-flex justify-content-center align-items-center">
+  
+  <div class="w-50 bg-white rounded p-5" style="min-width: 344px;">
+    <h2 class="fw-bold mb-5">註冊帳號</h2>
+
+    <form action="/register" method="POST">
+      <!-- 信箱 -->
+      <div class="row mb-4">
+        <label for="inputEmail" class="col-lg-3 col-form-label fw-bold"><i class="fa-solid fa-envelope"></i> 帳號</label>
+        <div class="col-sm-9">
+          <input type="email" class="form-control" placeholder="請輸入信箱" id="inputEmail" name="email" required>
+        </div>
+      </div>
+
+      <!-- 信箱 -->
+      <div class="row mb-4">
+        <label for="inputName" class="col-lg-3 col-form-label fw-bold"><i class="fa-solid fa-user"></i> 名稱(選填)</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" placeholder="請輸入名稱" id="inputName" name="name">
+        </div>
+      </div>
+
+      <!-- 密碼 -->
+      <div class="row mb-4">
+        <label for="inputPassword" class="col-lg-3 col-form-label fw-bold"><i class="fa-solid fa-key"></i> 密碼</label>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" placeholder="請輸入密碼" id="inputPassword" name="password" required>
+        </div>
+      </div>
+
+      <!-- 再次確認密碼 -->
+      <div class="row mb-4">
+        <label for="inputCheckPassword" class="col-lg-3 col-form-label fw-bold"><i class="fa-solid fa-key"></i> 再次確認密碼</label>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" placeholder="請再次輸入密碼" id="inputCheckPassword" name="checkPassword" required>
+        </div>
+      </div>
+
+      <!-- 確認及跳轉按鈕 -->
+      <div class="row mt-5">
+        <div class="col-12 col-lg-12">
+          <button type="submit" class="btn btn-primary me-3 mt-2"><i class="fa-solid fa-floppy-disk"></i>
+            確認註冊</button>
+          <a class="btn btn-link mt-2 px-0" href="/login">已有註冊帳號?</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{{>message}}
+
