@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/show.css">
 
+{{>navbar}}
+
 <h1 class="mb-1 restaurant-show-title">{{restaurant.name}}</h1>
 
 <div class="container p-5 mb-3 rounded-4" style="background-color: #A9B7AA;">
@@ -69,7 +71,8 @@
     </div>
 
     <div class="col-12 d-flex justify-content-end">
-      <button type="submit" class="btn btn-secondary fw-bold">Save</button>
+      <button type="submit" class="btn btn-secondary fw-bold me-1"><i class="fa-solid fa-floppy-disk"></i>儲存</button>
+      <a class="btn btn-success fw-bold" href="/"><i class="fa-solid fa-xmark"></i>返回</a>
     </div>
   </form>
 </div>
