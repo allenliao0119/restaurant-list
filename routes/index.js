@@ -30,9 +30,14 @@ passport.serializeUser((user, done) => {
   return done(null, {id, name, email})
 })
 
-const restaurants = require('./restaurants')
+passport.deserializeUser((user, done) => {
+  return done(null, {id: user.id})
+})
 
-router.use('/restaurants', restaurants)
+const restaurants = require('./restaurants')
+const authHandler = require('../middlewares/auth-handler')
+
+router.use('/restaurants', authHandler, restaurants)
 
 router.get('/', (req, res) => {
   res.send('Hello World')
@@ -45,7 +50,6 @@ router.get('/register', (req, res) => {
 
 router.post('/register', (req, res, next) => {
   const { email, name, password, checkPassword } = req.body
-
   if (email === '' || password === '') {
     req.flash('error', '帳號或密碼未填寫，再請確認')
     return res.redirect('back')
