@@ -1,9 +1,13 @@
 // ----- require packages -----
 const express = require('express')
+const app = express()
 const flash = require('connect-flash')
 const session = require('express-session')
-const app = express()
-const passport = require('./config/passport')
+
+const methodOverride = require('method-override')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const handlebarsHelper = require('./helpers/handlebars-helper')
 const { engine } = require('express-handlebars')
@@ -11,9 +15,8 @@ app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs', helpers: hand
 app.set('view engine', 'hbs')
 app.set('views', './views')
 
-const methodOverride = require('method-override')
-
 const router = require('./routes')
+const passport = require('./config/passport')
 
 const messageHandler = require('./middlewares/message-handler')
 const errorHandler = require('./middlewares/error-handler')
@@ -26,7 +29,7 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(session({
-  secret: 'keyboard dog',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }))
