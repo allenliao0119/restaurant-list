@@ -3,15 +3,18 @@ const express = require('express')
 const flash = require('connect-flash')
 const session = require('express-session')
 const app = express()
+const passport = require('passport')
 
+const handlebarsHelper = require('./helpers/handlebars-helper')
 const { engine } = require('express-handlebars')
-app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs' }))
+app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs', helpers: handlebarsHelper }))
 app.set('view engine', 'hbs')
 app.set('views', './views')
 
 const methodOverride = require('method-override')
 
 const router = require('./routes')
+
 const messageHandler = require('./middlewares/message-handler')
 const errorHandler = require('./middlewares/error-handler')
 
@@ -29,6 +32,8 @@ app.use(session({
 }))
 
 app.use(flash())
+
+app.use(passport.initialize())
 
 app.use(messageHandler)
 

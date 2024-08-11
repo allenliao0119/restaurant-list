@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="/stylesheets/login.css">
+
+<div class="container login d-flex justify-content-center align-items-center">
+  <div class="w-50 bg-white rounded p-5" style="min-width: 344px;">
+    <h2 class="fw-bold mb-5">登入系統</h2>
+    <form action="/login" method="POST">
+
+      <!-- 信箱 -->
+      <div class="row mb-4">
+        <label for="inputEmail" class="col-lg-3 col-form-label fw-bold"><i class="fa-solid fa-envelope"></i> 帳號</label>
+        <div class="col-sm-9">
+          <input type="email" class="form-control" placeholder="請輸入信箱" id="inputEmail" name="email">
+        </div>
+      </div>
+
+      <!-- 密碼 -->
+      <div class="row mb-4">
+        <label for="inputPassword" class="col-lg-3 col-form-label fw-bold"><i class="fa-solid fa-key"></i> 密碼</label>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" placeholder="請輸入密碼" id="inputPassword" name="password">
+        </div>
+      </div>
+
+      <!-- 確認及跳轉按鈕 -->
+      <div class="row mt-5">
+        <div class="col-12 col-lg-12">
+          <button type="submit" class="btn btn-primary me-3 mt-2"><i class="fa-solid fa-right-to-bracket"></i> 登入</button>
+          <a class="btn btn-primary me-3 mt-2" href="/oauth2/redirect/facebook">以 <i class="fa-brands fa-facebook"></i>Facebook登入</a>
+          <a class="btn btn-link mt-3 px-0" href="/register">尚未註冊帳號?</a>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+{{>message}}

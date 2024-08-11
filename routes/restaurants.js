@@ -16,7 +16,7 @@ router.post('/', (req, res, next) => {
   return Restaurant.create(restaurant)
     .then(() => {
       req.flash('success', '新增成功!')
-      res.redirect('/')
+      res.redirect('/restaurants')
     })
     .catch(error => {
       error.errorMsg = '新增失敗:('
@@ -38,6 +38,18 @@ router.get('/search', (req, res, next) => {
   return Restaurant.findAll(options)
     .then(restaurants => {
       res.render('index', { restaurants, keyword })})
+    .catch(error => {
+      error.errorMsg = '資料取得錯誤'
+      next(error)
+    })
+})
+
+router.get('/', (req, res) => {
+  return Restaurant.findAll({
+    attributes: ['id', 'name', 'category', 'image', 'rating'],
+    raw: true
+  })
+    .then(restaurants => res.render('index', { restaurants }))
     .catch(error => {
       error.errorMsg = '資料取得錯誤'
       next(error)
@@ -88,7 +100,7 @@ router.delete('/:id', (req, res, next) => {
   return Restaurant.destroy({ where: { id } })
     .then(() => {
       req.flash('success', '刪除成功！')
-      res.redirect('/')
+      res.redirect('/restaurants')
     })
     .catch(error => {
       error.errorMsg = '刪除錯誤'

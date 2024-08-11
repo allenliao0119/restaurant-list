@@ -1,10 +1,34 @@
 const express = require('express')
 const router = express.Router()
 
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
+
 const db = require('../models')
 const User = db.User
-const Restaurant = db.Restaurant
 
+passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password, done) => {
+  return User.findOne({
+    attributes: ['id', 'name', 'email', 'password'],
+    where: {email: username},
+    raw: true
+  })
+    .then(user => {
+      if (user.password !== password) {
+        return done(null, false, { message: '密碼錯誤'})
+      }
+      return done(null, user)
+    })
+    .catch(error => {
+      error.errorMsg = '登入失敗'
+      return done(error)
+    })
+}))
+
+passport.serializeUser((user, done) => {
+  const {id, name, email} = user
+  return done(null, {id, name, email})
+})
 
 const restaurants = require('./restaurants')
 
@@ -12,11 +36,6 @@ router.use('/restaurants', restaurants)
 
 router.get('/', (req, res) => {
   res.send('Hello World')
-})
-
-// login
-router.get('/login', (req, res) => {
-  res.render('login')
 })
 
 // register
@@ -55,6 +74,25 @@ router.post('/register', (req, res, next) => {
       error.errorMsg = '註冊失敗'
       next(error)
     })
+})
+
+// login
+router.get('/login', (req, res) => {
+  res.render('login')
+})
+
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/restaurants',
+  failureRedirect: '/login',
+  failureFlash: true
+}))
+
+// logout
+router.post('/logout', (req, res, next) => {
+  req.logout(error => {
+    if (error) next(error)
+    return res.redirect('/login')
+  })
 })
 
 module.exports = router
