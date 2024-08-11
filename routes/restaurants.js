@@ -45,7 +45,6 @@ router.get('/search', (req, res, next) => {
 })
 
 router.get('/', (req, res) => {
-  console.log(req.session)
   return Restaurant.findAll({
     attributes: ['id', 'name', 'category', 'image', 'rating'],
     raw: true
