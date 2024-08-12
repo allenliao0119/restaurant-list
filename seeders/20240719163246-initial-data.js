@@ -1,6 +1,7 @@
 'use strict'
 
 const passport = require('passport')
+const bcrypt = require('bcryptjs')
 const { sequelize } = require('../models')
 
 const seeds = require('../restaurant.json').results
@@ -18,12 +19,12 @@ module.exports = {
         {
           id: 1,
           email: 'user1@example.com',
-          password: '12345678',
+          password: bcrypt.hashSync('12345678', 10),
         },
         {
           id: 2,
           email: 'user2@example.com',
-          password: '12345678',
+          password: bcrypt.hashSync('12345678', 10),
         }], 
         { transaction }))
         

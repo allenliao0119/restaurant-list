@@ -1,6 +1,6 @@
 const passport = require('passport')
-
 const LocalStrategy = require('passport-local')
+const bcrypt = require('bcryptjs')
 
 const db = require('../models')
 const User = db.User
@@ -11,16 +11,23 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password, 
     where: { email: username },
     raw: true
   })
-    .then(user => {
-      if (user.password !== password) {
-        return done(null, false, { message: '密碼錯誤' })
-      }
-      return done(null, user)
-    })
-    .catch(error => {
-      error.errorMsg = '登入失敗'
-      return done(error)
-    })
+  .then(user => {
+    if (!user) {
+      return done(null, false, { message: '帳號不存在' })
+    }
+
+    return bcrypt.compare(password, user.password)
+      .then(isMatched => {
+        if (!isMatched) {
+          return done(null, false, { message: '密碼錯誤' })
+        }
+        return done(null, user)
+      })
+  })
+  .catch(error => {
+    error.errorMsg = '登入失敗'
+    done(error)
+  })  
 }))
 
 passport.serializeUser((user, done) => {

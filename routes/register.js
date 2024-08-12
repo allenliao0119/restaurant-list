@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const bcrypt = require('bcryptjs')
 
 const db = require('../models')
 const User = db.User
@@ -21,19 +22,21 @@ router.post('/', (req, res, next) => {
     return res.redirect('back')
   }
 
-  return User.findOrCreate({
-    where: { email },
-    defaults: { email, name, password }
-  })
-    .then(result => {
-      const [user, created] = result
-      if (!created) {
+  return User.count({where: { email }})
+    .then(count => {
+      if (count !== 0) {
         req.flash('error', '帳號已註冊過')
         return res.redirect('back')
       }
-
-      req.flash('success', '註冊成功！請重新登入')
-      return res.redirect('/login')
+      
+      return bcrypt.hash(password, 10)
+        .then(hash => {
+          return User.create({ email, name, password: hash })
+            .then(() => {
+              req.flash('success', '註冊成功！請重新登入')
+              return res.redirect('/login')
+            })
+        })
     })
     .catch(error => {
       error.errorMsg = '註冊失敗'
