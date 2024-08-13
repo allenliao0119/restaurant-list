@@ -48,7 +48,6 @@ passport.use(new FacebookStrategy({
     where: { email }
   })
     .then(user => {
-      console.log(user)
       if (user) return done(null, user)
       console.log('create new')
       const randomPassword = Math.random().toString(36).slice(-8)
