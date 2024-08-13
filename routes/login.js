@@ -14,4 +14,8 @@ router.post('/', passport.authenticate('local', {
   failureFlash: true
 }))
 
+router.get('/facebook', passport.authenticate('facebook', {
+  scope: ['email']
+})) 
+
 module.exports = router

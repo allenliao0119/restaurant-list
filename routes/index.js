@@ -22,4 +22,10 @@ router.get('/', (req, res) => {
   return res.redirect('/login')
 })
 
+router.get('/oauth2/redirect/facebook', passport.authenticate('facebook',{
+  successRedirect: '/restaurants',
+  failureRedirect: '/login',
+  failureFlash: true
+})) 
+
 module.exports = router
