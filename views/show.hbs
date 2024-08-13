@@ -3,7 +3,7 @@
 {{>navbar}}
 
 <h1 class="mb-1 restaurant-show-title">{{restaurant.name}}</h1>
-<div class="container">
+<div class="container p-3">
   <div class="row">
     <div class="col-12 col-md-10 mx-auto">
 
@@ -41,6 +41,15 @@
       <img class="rounded mx-auto d-block mb-4 w-100"
         src="{{restaurant.image}}" alt="{{restaurant.name}}"
         style="max-width: 600px;">
+
+      <div class="d-flex justify-content-end mt-5">
+        <a class="btn btn-primary me-3 fw-bold" href="/restaurants/{{restaurant.id}}/edit">
+          <i class="fa-solid fa-pen-to-square"></i>編輯
+        </a>
+        <a class="btn btn-secondary fw-bold" href="/restaurants">
+          <i class="fa-solid fa-xmark"></i>返回首頁
+        </a>
+      </div>
     </div>
   </div>
 </div>
